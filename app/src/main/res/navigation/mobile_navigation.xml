@@ -3,39 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@id/nav_login">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="pe.jadse.android_login_firebase.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" >
+        android:id="@+id/nav_splash"
+        android:name="pe.jadse.android_login_firebase.ui.Splash"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
         <action
-            android:id="@+id/action_nav_home_to_login"
+            android:id="@+id/action_nav_splash_to_nav_login"
             app:destination="@id/nav_login" />
     </fragment>
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="pe.jadse.android_login_firebase.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
-
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="pe.jadse.android_login_firebase.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
-    <fragment
         android:id="@+id/nav_login"
         android:name="pe.jadse.android_login_firebase.ui.Login"
-        android:label="Login" />
-    <fragment
-        android:id="@+id/nav_splash"
-        android:name="pe.jadse.android_login_firebase.ui.Splash"
-        android:label="Splash" >
-        <action
-            android:id="@+id/action_splash_to_nav_home"
-            app:destination="@id/nav_home" />
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
     </fragment>
+
 </navigation>
