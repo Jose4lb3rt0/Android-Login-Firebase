@@ -7,7 +7,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#FAFAFA"
     android:padding="20dp"
-    tools:ignore="ExtraText">
+    tools:ignore="ExtraText"
+    tools:context=".ui.Login">
 
     <TextView
         android:id="@+id/tv01"

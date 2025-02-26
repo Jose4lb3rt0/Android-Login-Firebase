@@ -30,4 +30,12 @@
         android:id="@+id/nav_login"
         android:name="pe.jadse.android_login_firebase.ui.Login"
         android:label="Login" />
+    <fragment
+        android:id="@+id/nav_splash"
+        android:name="pe.jadse.android_login_firebase.ui.Splash"
+        android:label="Splash" >
+        <action
+            android:id="@+id/action_splash_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
 </navigation>
