@@ -1,7 +1,10 @@
 package pe.jadse.android_login_firebase.ui;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,20 +19,20 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import pe.jadse.android_login_firebase.R;
-import pe.jadse.android_login_firebase.databinding.FragmentLoginBinding;
+import pe.jadse.android_login_firebase.databinding.FragmentRegisterBinding;
 
-public class Login extends Fragment {
-
-    NavController navController;
-    FragmentLoginBinding binding;
+public class Register extends Fragment {
+    FragmentRegisterBinding binding;
     Context context;
     View view;
+    NavController navController;
 
     FirebaseAuth fAuth;
+    Button buttonRegister, buttonLogin;
     EditText editTextEmail, editTextPassword;
-    Button buttonLogin, buttonRegister;
 
     @Override
     public void onDestroyView() {
@@ -40,7 +43,7 @@ public class Login extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentLoginBinding.inflate(inflater, container,false );
+        binding = FragmentRegisterBinding.inflate(inflater, container, false);
         return view = binding.getRoot();
     }
 
@@ -52,33 +55,37 @@ public class Login extends Fragment {
 
         fAuth = FirebaseAuth.getInstance();
 
-        editTextEmail = binding.edtEmail;
-        editTextPassword = binding.edtPassword;
         buttonLogin = binding.btnLogin;
         buttonRegister = binding.btnRegister;
 
+        buttonLogin.setPaintFlags(buttonLogin.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
+        editTextEmail = binding.edtEmail;
+        editTextPassword = binding.edtPassword;
+
         buttonLogin.setOnClickListener(v -> {
-            String email = editTextEmail.getText().toString().trim();
-            String password = editTextPassword.getText().toString().trim();
-
-            if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(context, "Por favor, ingresa tu email y contraseña.", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            fAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(context, "Inicio de sesión exitoso!", Toast.LENGTH_SHORT).show();
-                            navController.navigate(R.id.action_nav_login_to_nav_home);
-                        } else {
-                            Toast.makeText(context, "Error al iniciar sesión: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+            navController.navigate(R.id.nav_login);
         });
 
         buttonRegister.setOnClickListener(v -> {
-            navController.navigate(R.id.action_nav_login_to_register);
+            String email = editTextEmail.getText().toString();
+            String password = editTextPassword.getText().toString();
+
+            if (email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(context, "Por favor, ingresa tus credenciales",Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            fAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(context, "Usuario registrado exitosamente.", Toast.LENGTH_SHORT).show();
+                            navController.navigate(R.id.nav_login);
+                        } else {
+                            Toast.makeText(context, "Usuario registrado exitosamente.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
         });
     }
 }
+
