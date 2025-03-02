@@ -76,15 +76,27 @@ public class Register extends Fragment {
                 return;
             }
 
-            fAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(context, "Usuario registrado exitosamente.", Toast.LENGTH_SHORT).show();
-                            navController.navigate(R.id.nav_login);
-                        } else {
-                            Toast.makeText(context, "Usuario registrado exitosamente.", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+            fAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    boolean comprobarUsuario = task.getResult().getSignInMethods() != null && !task.getResult().getSignInMethods().isEmpty();
+
+                    if (comprobarUsuario)
+                        Toast.makeText(context, "El usuario ya está registrado", Toast.LENGTH_SHORT).show();
+                    else {
+                        fAuth.createUserWithEmailAndPassword(email, password)
+                                .addOnCompleteListener(registerTask -> {
+                                    if (registerTask.isSuccessful()) {
+                                        Toast.makeText(context, "Usuario registrado con exito.", Toast.LENGTH_SHORT).show();
+                                        navController.navigate(R.id.nav_login);
+                                    } else {
+                                        Toast.makeText(context, "Error al registrar: " + registerTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+                } else {
+                    Toast.makeText(context, "Error al verificar usuario: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
         });
     }
 }

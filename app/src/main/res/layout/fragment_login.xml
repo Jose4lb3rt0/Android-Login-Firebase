@@ -40,6 +40,8 @@
         android:id="@+id/edtEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:singleLine="true"
         android:background="@drawable/sh_input"
         android:textColor="@color/black"
         android:hint="Correo"
